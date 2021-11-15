@@ -48,3 +48,30 @@ $timespan = Timespan::createFromDateDiff(
 
 echo $timespan->format(); // '27:00:00'
 ```
+
+
+## Available time format characters
+
+
+<table>
+    <tr>
+        <th>Character</th>
+        <th>Description</th>
+    </tr>
+    <tr>
+        <td>%h</td>
+        <td>The hour value.</td>
+    </tr>
+    <tr>
+        <td>%i</td>
+        <td>The minute value. From `0`to `59`.</td>
+    </tr>
+    <tr>
+        <td>%I</td>
+        <td>The total minutes value.</td>
+    </tr>
+    <tr>
+        <td>%s</td>
+        <td>The second value. From `0`to `59`. </td>
+    </tr>
+</table>
