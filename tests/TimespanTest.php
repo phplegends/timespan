@@ -5,13 +5,11 @@ use PHPUnit\Framework\TestCase;
 
 class TimespanTest extends TestCase
 {
-    
-    public function testGetSeconds() 
-    {  
+    public function testGetSeconds()
+    {
         $this->assertEquals(90, (new Timespan(0, 1, 30))->getSeconds());
         $this->assertEquals(90, (new Timespan(0, 0, 90))->getSeconds());
         $this->assertEquals(3600, (new Timespan(1, 0, 0))->getSeconds());
-
     }
 
     public function testAsMinutes()
@@ -56,7 +54,7 @@ class TimespanTest extends TestCase
             ['-01:00:00', [0, 0, -3600], Timespan::DEFAULT_FORMAT],
         ];
 
-         foreach ($times_with_custom_formats as [$expected, $args, $format]) {
+        foreach ($times_with_custom_formats as [$expected, $args, $format]) {
             $timespan = new Timespan(...$args);
             $this->assertEquals($expected, $timespan->format($format));
         }
@@ -75,7 +73,7 @@ class TimespanTest extends TestCase
         $this->assertEquals(3600 + 60 + 59, $timespan->add(1)->getSeconds());
 
         $timespan = new Timespan();
-    
+
         $this->assertEquals(-3600, $timespan->add(-1)->getSeconds());
     }
 
@@ -91,13 +89,12 @@ class TimespanTest extends TestCase
     public function testIsEmpty()
     {
         foreach ([-1, 0, 1] as $minute) {
-
             $timespan = new Timespan(0, $minute, 0);
 
             $this->assertEquals($minute === 0, $timespan->isEmpty());
         }
 
-        $this->assertTrue((new Timespan)->isEmpty());
+        $this->assertTrue((new Timespan())->isEmpty());
     }
 
     public function testDiff()
@@ -152,12 +149,12 @@ class TimespanTest extends TestCase
             -15  => ['%R%s seconds', '-15 seconds'],
         ] as $expected => $args) {
             $this->assertEquals(
-                $expected, 
+                $expected,
                 Timespan::createFormatFormat(...$args)->getSeconds()
             );
         }
     }
-    
+
     public function testAddMinutes()
     {
         $timespan = new Timespan(0, 1, 30);
@@ -171,7 +168,7 @@ class TimespanTest extends TestCase
     {
         $timespan = new Timespan(0, 0, 30);
         $this->assertEquals(30, $timespan->getSeconds());
-        
+
         $timespan->addHours(2);
         $this->assertEquals(30 + 7200, $timespan->getSeconds());
     }
@@ -195,7 +192,7 @@ class TimespanTest extends TestCase
         $d2 = new DateTime('2015-01-02 02:00:00');
 
         $interval = $d1->diff($d2);
-        
+
         $timespan = Timespan::createFromDateInterval($interval);
 
         $this->assertEquals('03:00:00', $timespan->format());
@@ -203,10 +200,9 @@ class TimespanTest extends TestCase
 
     public function testCreateFromDateDiff()
     {
-        
         $timespan = Timespan::createFromDateDiff(
             new DateTime('2015-01-01 23:00:00'),
-            new DateTime('2015-01-03 02:00:00') 
+            new DateTime('2015-01-03 02:00:00')
         );
 
         $this->assertEquals('27:00:00', $timespan->format());
