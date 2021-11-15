@@ -1,0 +1,19 @@
+{
+    "name"     : "phplegends/timespan",
+    "description" : "A timespan library",
+    "license" : "MIT",
+    "autoload" : {
+        "psr-4": {
+            "PHPLegends\\Timespan\\": "src/Timespan/"
+        }
+    },
+    "scripts" : {
+        "test" : "./vendor/bin/phpunit"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^8.0"
+    },
+    "require": {
+        "friendsofphp/php-cs-fixer": "^3.2"
+    }
+}
