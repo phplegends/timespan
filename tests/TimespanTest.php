@@ -208,8 +208,8 @@ class TimespanTest extends TestCase
         $this->assertEquals('27:00:00', $timespan->format());
 
         $timespan = Timespan::createFromDateDiff(
-            new DateTime('2015-01-03 02:00:00'),
-            new DateTime('2015-01-01 23:00:00')
+            new DateTime('2021-01-03 02:00:00'),
+            new DateTime('2021-01-01 23:00:00')
         );
         $this->assertEquals('-27:00:00', $timespan->format());
     }
