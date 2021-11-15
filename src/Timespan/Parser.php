@@ -31,7 +31,7 @@ class Parser
         $time = new Timespan($units['h'], $units['i'], $units['s']);
 
         if (static::isNegativeSign($units['r'])) {
-            $time->setSeconds(-$time->getSeconds());
+            $time->negative();
         }
 
         return $time;
