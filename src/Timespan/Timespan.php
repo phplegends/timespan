@@ -3,7 +3,7 @@
 namespace PHPLegends\Timespan;
 
 /**
- * The timestamp class
+ * The Timespan class
  *
  * @author Wallace de Souza Vizerra <wallacemaxters@gmail.com>
  * */
