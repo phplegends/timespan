@@ -2,6 +2,9 @@
 
 namespace PHPLegends\Timespan;
 
+use DateInterval;
+use DateTimeInterface;
+
 /**
  * The Timespan class
  *
@@ -73,6 +76,11 @@ class Timespan
         return $this->getSeconds() / 3600;
     }
 
+    public function negative()
+    {
+        return $this->setSeconds(-$this->getSeconds());
+    }
+
     public function format(string $format = self::DEFAULT_FORMAT): string
     {
         return strtr($format, Parser::replacementsFromTimestamp($this));
@@ -85,9 +93,9 @@ class Timespan
 
     public function diff(self $time, bool $absolute = true): self
     {
-        $diff = $this->getSeconds() - $time->getSeconds();
+        $seconds = $time->getSeconds() - $this->getSeconds();
 
-        return new static(0, 0, $absolute ? abs($diff) : $diff);
+        return new static(0, 0, $absolute ? abs($seconds) : $seconds);
     }
 
     public function isNegative(): bool
@@ -133,5 +141,23 @@ class Timespan
     public static function createFormatFormat(string $format, string $value): self
     {
         return Parser::createTimespanFromFormat($format, $value);
+    }
+
+    public static function createFromDateInterval(DateInterval $interval)
+    {
+        $hours = ($interval->d * 24) + $interval->h;
+
+        $timespan = new static($hours, $interval->i, $interval->s);
+
+        $interval->invert === 1 && $timespan->negative();
+
+        return $timespan;
+    }
+
+    public static function createFromDateDiff(DateTimeInterface $date1, DateTimeInterface $date2)
+    {
+        $interval = $date1->diff($date2);
+
+        return static::createFromDateInterval($interval);
     }
 }
