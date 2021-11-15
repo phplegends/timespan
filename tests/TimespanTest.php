@@ -102,8 +102,8 @@ class TimespanTest extends TestCase
 
     public function testDiff()
     {
-        $t1 = new Timespan(0, 3, 30);
-        $t2 = new Timespan(0, 2, 10);
+        $t1 = new Timespan(0, 2, 10);
+        $t2 = new Timespan(0, 3, 30);
 
         $diff = $t1->diff($t2);
 
@@ -118,6 +118,7 @@ class TimespanTest extends TestCase
         $this->assertEquals('-00:01:20', $diff->format());
         $this->assertEquals(-60 -20, $diff->getSeconds());
     }
+
 
     public function testAddFromString()
     {
@@ -184,6 +185,36 @@ class TimespanTest extends TestCase
         foreach (['hours', 'minutes', 'seconds', 'total_minutes'] as $key) {
             $this->assertArrayHasKey($key, $units);
         }
+    }
 
+
+
+    public function testCreateFromDateInterval()
+    {
+        $d1 = new DateTime('2015-01-01 23:00:00');
+        $d2 = new DateTime('2015-01-02 02:00:00');
+
+        $interval = $d1->diff($d2);
+        
+        $timespan = Timespan::createFromDateInterval($interval);
+
+        $this->assertEquals('03:00:00', $timespan->format());
+    }
+
+    public function testCreateFromDateDiff()
+    {
+        
+        $timespan = Timespan::createFromDateDiff(
+            new DateTime('2015-01-01 23:00:00'),
+            new DateTime('2015-01-03 02:00:00') 
+        );
+
+        $this->assertEquals('27:00:00', $timespan->format());
+
+        $timespan = Timespan::createFromDateDiff(
+            new DateTime('2015-01-03 02:00:00'),
+            new DateTime('2015-01-01 23:00:00')
+        );
+        $this->assertEquals('-27:00:00', $timespan->format());
     }
 }
