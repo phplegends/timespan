@@ -4,13 +4,14 @@ namespace PHPLegends\Timespan;
 
 use DateInterval;
 use DateTimeInterface;
+use JsonSerializable;
 
 /**
  * The Timespan class
  *
  * @author Wallace de Souza Vizerra <wallacemaxters@gmail.com>
  * */
-class Timespan
+class Timespan implements JsonSerializable
 {
     public const DEFAULT_FORMAT        = '%r%h:%i:%s';
     public const TIME_WITH_SIGN_FORMAT = '%R%h:%i:%s';
@@ -87,6 +88,11 @@ class Timespan
     }
 
     public function __toString()
+    {
+        return $this->format();
+    }
+
+    public function jsonSerialize()
     {
         return $this->format();
     }
