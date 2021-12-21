@@ -18,11 +18,27 @@ class Timespan implements JsonSerializable
 
     protected $seconds = 0;
 
+
+    /**
+     * Create Timespan
+     *
+     * @param integer $hours
+     * @param integer $minutes
+     * @param integer $seconds
+     */
     public function __construct(int $hours = 0, int $minutes = 0, int $seconds = 0)
     {
         $this->setTime($hours, $minutes, $seconds);
     }
 
+    /**
+     * Defines the time
+     *
+     * @param integer $hours
+     * @param integer $minutes
+     * @param integer $seconds
+     * @return self
+     */
     public function setTime(int $hours = 0, int $minutes = 0, int $seconds = 0): self
     {
         return $this->setSeconds(
@@ -148,22 +164,11 @@ class Timespan implements JsonSerializable
     {
         return Parser::createTimespanFromFormat($format, $value);
     }
-
-    public static function createFromDateInterval(DateInterval $interval)
-    {
-        $hours = ($interval->d * 24) + $interval->h;
-
-        $timespan = new static($hours, $interval->i, $interval->s);
-
-        $interval->invert === 1 && $timespan->negative();
-
-        return $timespan;
-    }
-
+    
     public static function createFromDateDiff(DateTimeInterface $date1, DateTimeInterface $date2)
     {
-        $interval = $date1->diff($date2);
+        $seconds = $date2->getTimestamp() - $date1->getTimestamp();
 
-        return static::createFromDateInterval($interval);
+        return new static(0, 0, $seconds);
     }
 }

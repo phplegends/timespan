@@ -185,19 +185,6 @@ class TimespanTest extends TestCase
     }
 
 
-
-    public function testCreateFromDateInterval()
-    {
-        $d1 = new DateTime('2015-01-01 23:00:00');
-        $d2 = new DateTime('2015-01-02 02:00:00');
-
-        $interval = $d1->diff($d2);
-
-        $timespan = Timespan::createFromDateInterval($interval);
-
-        $this->assertEquals('03:00:00', $timespan->format());
-    }
-
     public function testCreateFromDateDiff()
     {
         $timespan = Timespan::createFromDateDiff(
