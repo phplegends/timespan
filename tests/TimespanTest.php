@@ -198,6 +198,17 @@ class TimespanTest extends TestCase
             new DateTime('2021-01-03 02:00:00'),
             new DateTime('2021-01-01 23:00:00')
         );
+
         $this->assertEquals('-27:00:00', $timespan->format());
+
+        $timespan = Timespan::createFromDateDiff(
+            new DateTime('2021-01-01 12:00:00'),
+            new DateTime('2022-01-01 13:00:02')
+        );
+
+        $this->assertEquals(31539602, $timespan->getSeconds());
+        $this->assertEquals('8761:00:02', $timespan->format('%h:%i:%s'));
+
+
     }
 }
