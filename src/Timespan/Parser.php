@@ -24,6 +24,14 @@ class Parser
         '%r' => '(?<r>\-{1})?',
     ];
 
+
+    /**
+     * Creates a Timespan from format
+     *
+     * @param string $format
+     * @param string $value
+     * @return Timespan
+     */
     public static function createTimespanFromFormat(string $format, string $value): Timespan
     {
         $units = static::createUnitsFromFormat($format, $value);
@@ -37,6 +45,12 @@ class Parser
         return $time;
     }
 
+    /**
+     * Replace formats with units
+     *
+     * @param Timespan $time
+     * @return array
+     */
     public static function replacementsFromTimestamp(Timespan $time): array
     {
         $units      = $time->getUnits();
@@ -54,6 +68,13 @@ class Parser
         ];
     }
 
+    /**
+     * Creates the unit from format
+     *
+     * @param string $format
+     * @param string $value
+     * @return array
+     */
     public static function createUnitsFromFormat(string $format, string $value): array
     {
         if (! preg_match(static::createRegexFromFormat($format), $value, $units)) {
@@ -71,17 +92,35 @@ class Parser
         ];
     }
 
+    /**
+     * Check if the format is valid
+     *
+     * @param string $format
+     * @param string $value
+     * @return boolean
+     */
     public static function isValidFormat(string $format, string $value): bool
     {
         return preg_match(static::createRegexFromFormat($format), $value) > 0;
     }
 
-    protected static function isNegativeSign($sign): bool
+    /**
+     * Check if the sign is negative
+     *
+     * @param string $sign
+     * @return boolean
+     */
+    protected static function isNegativeSign(string $sign): bool
     {
         return $sign === '-';
     }
 
-    public static function createRegexFromFormat(string $format): string
+    /**
+     * 
+     * @param string $format
+     * @return string
+     */
+    protected static function createRegexFromFormat(string $format): string
     {
         $regex = strtr($format, static::TIME_REPLACEMENTS);
 
