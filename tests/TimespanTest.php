@@ -10,6 +10,9 @@ class TimespanTest extends TestCase
         $this->assertEquals(90, (new Timespan(0, 1, 30))->getSeconds());
         $this->assertEquals(90, (new Timespan(0, 0, 90))->getSeconds());
         $this->assertEquals(3600, (new Timespan(1, 0, 0))->getSeconds());
+
+        $this->assertEquals(PHP_INT_MAX, (new Timespan(0, 0, PHP_INT_MAX))->getSeconds());
+
     }
 
     public function testAsMinutes()
@@ -139,7 +142,7 @@ class TimespanTest extends TestCase
         }
     }
 
-    public function testCreateFormatFormat()
+    public function testCreateFromFormat()
     {
         foreach ([
             120  => [Timespan::DEFAULT_FORMAT, '00:02:00'],
@@ -150,7 +153,7 @@ class TimespanTest extends TestCase
         ] as $expected => $args) {
             $this->assertEquals(
                 $expected,
-                Timespan::createFormatFormat(...$args)->getSeconds()
+                Timespan::createFromFormat(...$args)->getSeconds()
             );
         }
     }
